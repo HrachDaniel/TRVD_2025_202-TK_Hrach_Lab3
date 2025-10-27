@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library | Каталог</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-left">
+            <span class="header-logo">Library</span>
+            <nav class="main-nav">
+                <a href="/home">Головна</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <a href="#" id="profile-link" class="btn-login" style="text-decoration: none;">Профіль</a>
+        </div>
+    </header>
+    <aside id="profile-sidebar" class="profile-sidebar">
+        <div class="sidebar-header">
+            <h3>Профіль</h3>
+            <button class="sidebar-close" id="sidebar-close">&times;</button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="#">📖 Прочитане</a>
+            <a href="/savage">⭐ Збережене</a>
+            <a href="/">🚪 Вихід</a>
+        </nav>
+        
+        <div class="theme-switch-block">
+            <span>Темне оформлення</span>
+            <label class="switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </aside>
+    <div class="container catalog-layout">
+        
+        <main class="catalog-main">
+            <div class="catalog-header">
+                <h2>Каталог</h2>
+                <input type="text" class="search-input" placeholder="Пошук за назвою">
+            </div>
+
+            <div class="section-grid catalog-grid-page">
+                {{#books}}
+                <a href="/home/preview/{{id}}" class="manga-card">
+                    <img src="{{image}}" alt="{{title}}">
+                    <div class="manga-card-info">
+                        <h4>{{title}}</h4>
+                        <p>{{genre}}</p>
+                    </div>
+                </a>
+                {{/books}}
+                
+                <a href="#" class="manga-card">
+                    <img src="https://via.placeholder.com/180x250/9b59b6/ffffff?text=Книга+2" alt="Книга 2">
+                    <div class="manga-card-info">
+                        <h4>Книга 2</h4>
+                        <p>Фантастика</p>
+                    </div>
+                </a>
+                
+                <a href="#" class="manga-card">
+                    <img src="https://via.placeholder.com/180x250/3498db/ffffff?text=Книга+3" alt="Книга 3">
+                    <div class="manga-card-info">
+                        <h4>Книга 3</h4>
+                        <p>Детектив</p>
+                    </div>
+                </a>
+
+                <a href="#" class="manga-card">
+                    <img src="https://via.placeholder.com/180x250/e67e22/ffffff?text=Книга+4" alt="Книга 4">
+                    <div class="manga-card-info">
+                        <h4>Книга 4</h4>
+                        <p>Фентезі</p>
+                    </div>
+                </a>
+                
+                <a href="#" class="manga-card">
+                    <img src="https://via.placeholder.com/180x250/c0392b/ffffff?text=Книга+5" alt="Книга 5">
+                    <div class="manga-card-info">
+                        <h4>Книга 5</h4>
+                        <p>Трилер</p>
+                    </div>
+                </a>
+
+                <a href="#" class="manga-card">
+                    <img src="https://via.placeholder.com/180x250/16a085/ffffff?text=Книга+6" alt="Книга 6">
+                    <div class="manga-card-info">
+                        <h4>Книга 6</h4>
+                        <p>Історичний</p>
+                    </div>
+                </a>
+
+                <a href="#" class="manga-card">
+                    <img src="https://via.placeholder.com/180x250/f1c40f/ffffff?text=Книга+7" alt="Книга 7">
+                    <div class="manga-card-info">
+                        <h4>Книга 7</h4>
+                        <p>Наукова література</p>
+                    </div>
+                </a>
+
+                <a href="#" class="manga-card">
+                    <img src="https://via.placeholder.com/180x250/8e44ad/ffffff?text=Книга+8" alt="Книга 8">
+                    <div class="manga-card-info">
+                        <h4>Книга 8</h4>
+                        <p>Біографія</p>
+                    </div>
+                </a>
+</div>
+        </main>
+        
+        <aside class="catalog-sidebar">
+            <div class="filter-group">
+                <h4>Жанри</h4>
+                <label><input type="checkbox"> Фентезі</label>
+                <label><input type="checkbox"> Наукова фантастика</label>
+                <label><input type="checkbox"> Детектив</label>
+                <label><input type="checkbox"> Роман</label>
+                <label><input type="checkbox"> Історичний</label>
+                <label><input type="checkbox"> Трилер</label>
+            </div>
+
+            <div class="filter-group">
+                <h4>Вікові обмеження</h4>
+                <label><input type="checkbox"> Без обмежень</label>
+                <label><input type="checkbox"> 6+</label>
+                <label><input type="checkbox"> 12+</label>
+                <label><input type="checkbox"> 16+</label>
+                <label><input type="checkbox"> 18+</label>
+            </div>
+            
+            <button class="btn-filter-apply">Застосувати</button>
+            <button class="btn-filter-apply" style="background-color: #6c757d; margin-top: 5px;">Скинути</button>
+        </aside>
+
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2025 Library. Інформаційний портал</p>
+            <nav class="footer-nav">
+                <a href="#">Контакти</a>
+                <a href="#">Політика конфіденційності</a>
+            </nav>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('profile-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('profile-sidebar').classList.toggle('open');
+        });
+
+        document.getElementById('sidebar-close').addEventListener('click', function() {
+            document.getElementById('profile-sidebar').classList.remove('open');
+        });
+        
+        document.getElementById('theme-toggle').addEventListener('change', function() {
+            document.body.classList.toggle('dark-theme', this.checked);
+            
+            localStorage.setItem('theme', this.checked ? 'dark' : 'light');
+        });
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+            document.getElementById('theme-toggle').checked = true;
+        }
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.querySelector('.search-input');
+    const resultsContainer = document.querySelector('.catalog-grid-page');
+    const initialContent = resultsContainer.innerHTML;
+
+    searchInput.addEventListener('keyup', function() {
+        const query = searchInput.value.trim();
+
+        if (query === '') {
+            resultsContainer.innerHTML = initialContent;
+            return;
+        }
+
+        fetch(`/search?q=${query}`)
+            .then(response => response.json())
+            .then(books => {
+                resultsContainer.innerHTML = '';
+
+                if (books.length > 0) {
+                    books.forEach(book => {
+                        const previewUrl = window.location.pathname.includes('home') 
+                                         ? `/home/preview/${book.id}` 
+                                         : `/preview/${book.id}`;
+
+                        const bookElement = document.createElement('a');
+                        bookElement.href = previewUrl;
+                        bookElement.classList.add('manga-card');
+                        bookElement.innerHTML = `
+                            <img src="${book.image}" alt="${book.title}">
+                            <div class="manga-card-info">
+                                <h4>${book.title}</h4>
+                                <p>${book.genre}</p>
+                            </div>
+                        `;
+                        resultsContainer.appendChild(bookElement);
+                    });
+                } else {
+                    resultsContainer.innerHTML = '<p>За вашим запитом нічого не знайдено.</p>';
+                }
+            })
+            .catch(error => console.error('Помилка пошуку:', error));
+    });
+});
+    </script>
+</body>
+</html>

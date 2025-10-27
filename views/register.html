@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library | Реєстрація</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .btn-register-submit {
+            background-color: #2ecc71; 
+            color:white;              
+            border: none;              
+            padding: 10px 15px;        
+            border-radius: 4px;        
+            font-weight: bold;         
+            cursor: pointer;           
+            flex-grow: 1;              
+            text-align: center;
+            font-size: 1em;            
+            transition: background-color 0.2s; 
+        }
+
+        .btn-register-submit:hover {
+            background-color: #27ae60; 
+        }
+
+        .register-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .registration-box {
+            background-color: #fff;
+            padding: 20px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .registration-box h2 {
+            text-align: center;
+            color: #358dfa; 
+            margin-top: 0;
+            border-bottom: 2px solid #f4f4f4;
+            padding-bottom: 10px;
+        }
+
+        .reg-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .reg-table td {
+            padding: 8px 5px;
+            border: 1px solid #ddd;
+        }
+
+        .reg-table td:first-child {
+            width: 40%;
+            background-color: #f9f9f9;
+            font-weight: bold;
+        }
+
+        .reg-table input[type="text"],
+        .reg-table input[type="email"],
+        .reg-table input[type="password"],
+        .reg-table input[type="date"] {
+            width: calc(100% - 10px);
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        .reg-table input[type="date"] {
+            width: auto;
+        }
+
+        .form-buttons {
+            text-align: center;
+            padding: 15px 0 0;
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+        }
+
+        .form-buttons input[type="reset"],
+        .form-buttons a {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            flex-grow: 1;
+        }
+
+        .btn-reset {
+            background-color: #f39c12; 
+        }
+
+        .btn-home {
+            background-color: #3498db; 
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-left">
+            <span class="header-logo">Library</span>
+            <nav class="main-nav">
+                <a href="/catalog">Каталог</a>
+                <a href="#">Пошук</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <a href="/login" class="btn-login" style="text-decoration: none;">Вхід</a>
+        </div>
+    </header>
+
+    <div class="register-container">
+        <div class="registration-box">
+            <h2>Реєстрація</h2>
+            <form action="/register" method="post">
+                <table class="reg-table">
+                    <tr>
+                        <td>Введіть ваш логін</td>
+                        <td><input type="text" name="login" required></td>
+                    </tr>
+                    <tr>                   
+                        <td>E-mail</td>
+                        <td><input type="email" name="email" required></td>
+                    </tr>
+                    <tr>
+                        <td>Введіть ваш пароль</td>
+                        <td><input type="password" name="password" required></td>
+                    </tr>
+                    <tr>
+                        <td>Вік</td>
+                        <td><input type="text" name="age" required></td>
+                    </tr>
+                    <tr>
+                        <td>Стать</td>
+                        <td>
+                            <input type="radio" id="male" name="gender" value="Чоловіча" checked> 
+                            <label for="male">Чоловіча</label>
+                            <input type="radio" id="female" name="gender" value="Жіноча"> 
+                            <label for="female">Жіноча</label>
+                        </td>
+                    </tr>
+                </table>
+                <div class="form-buttons">
+                    <button type="submit" class="btn-register-submit">Зареєструвати</button>
+                    <input type="reset" value="Очистити" class="btn-reset">
+                    <a href="/" class="btn-home" style="text-align: center; display: flex; align-items: center; justify-content: center;">Повернутися на головну</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2025 Library. Інформаційний портал</p>
+            <nav class="footer-nav">
+                <a href="#">Контакти</a>
+                <a href="#">Політика конфіденційності</a>
+            </nav>
+        </div>
+    </footer>
+</body>
+
+</html>

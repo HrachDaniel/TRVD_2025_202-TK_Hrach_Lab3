@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "Темний",
+    "author": "Ніккі Сент-Кроу",
+    "genre": "Роман",
+    "image": "https://book24.ua/upload/iblock/0e1/0e1d260914818c00aca1bb76e08c39be.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Король Неверленду",
+    "author": "Ніккі Сент-Кроу",
+    "genre": "Роман",
+    "image": "https://static.yakaboo.ua/media/cloudflare/product/webp/352x340/c/o/cover_2343.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Принци Фенрі",
+    "author": "Ніккі Сент-Кроу",
+    "genre": "Роман",
+    "image": "https://ksd.ua/storage/products/covers/medium2_x2/G4iiYPaKhIbgIP2QBRGcSNefyoJkybbQjJ010Bud.png?v=1759232296"
+  }
+]

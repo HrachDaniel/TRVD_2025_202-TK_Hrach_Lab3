@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Темний</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        
+        .preview-content {
+            padding: 20px;
+        }
+
+        .cover-section {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .preview-image {
+            width: 200px;
+            flex-shrink: 0;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .preview-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+        }
+
+        .preview-info {
+            flex-grow: 1;
+        }
+
+        .title-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .title-header h1 {
+            margin: 0;
+            font-size: 1.8em;
+            color: #000;
+        }
+
+        .rating-box {
+            display: flex;
+            align-items: center;
+            background-color: #ff9800; 
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .rating-box .score {
+            font-size: 1.2em;
+            margin-right: 5px;
+        }
+
+        .preview-nav {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .preview-nav a {
+            text-decoration: none;
+            color: #777;
+            font-weight: 500;
+            padding-bottom: 5px;
+            transition: color 0.2s;
+        }
+
+        .preview-nav a:hover,
+        .preview-nav a.active {
+            color: #272526;
+            border-bottom: 2px solid #272526;
+        }
+
+        .description p {
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .tags {
+            margin-top: 15px;
+        }
+
+        .tag-item {
+            display: inline-block;
+            background-color: #ff9800;
+            color: white;
+            padding: 4px 10px;
+            margin: 5px 5px 5px 0;
+            border-radius: 15px;
+            font-size: 0.9em;
+            text-decoration: none;
+        }
+
+        .preview-layout {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .main-col {
+            flex: 3;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar-col {
+            flex: 1;
+            padding: 20px 0;
+        }
+        
+        .sidebar-block {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        .sidebar-block h4 {
+            margin-top: 0;
+            border-bottom: 1px dashed #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .action-button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1em;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .btn-read {
+            background-color: #ff9800; 
+            color: white;
+        }
+        
+        .btn-add {
+            background-color: #3498db;
+            color: white;
+        }
+
+        @media (max-width: 900px) {
+            .preview-layout {
+                flex-direction: column;
+            }
+            .cover-section {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .title-header {
+                flex-direction: column;
+                gap: 10px;
+                border-bottom: none;
+            }
+            .title-header h1 {
+                font-size: 1.5em;
+            }
+            .preview-nav {
+                justify-content: center;
+            }
+            .preview-image {
+                width: 150px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-left">
+            <span class="header-logo">Library</span>
+            <nav class="main-nav">
+                <a href="/home/catalog">Каталог</a>
+                <a href="#" id="search-link">Пошук</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <a href="#" id="profile-link" class="btn-login" style="text-decoration: none;">Профіль</a>
+        </div>
+        
+        <div id="search-modal" class="search-modal">
+            <input type="text" id="main-search-input" class="search-input-main" placeholder="Пошук тайтлів">
+            
+            <div class="search-tabs"></div>
+            <div id="search-results-container"></div>
+            
+            <p class="search-info">Розширений пошук тайтлів знаходиться в каталозі</p>
+        </div>
+    </header>
+    <aside id="profile-sidebar" class="profile-sidebar">
+        <div class="sidebar-header">
+            <h3>Профіль</h3>
+            <button class="sidebar-close" id="sidebar-close">&times;</button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="#">📖 Прочитане</a>
+            <a href="/savage">⭐ Збережене</a>
+            <a href="/">🚪 Вихід</a>
+        </nav>
+        
+        <div class="theme-switch-block">
+            <span>Темне оформлення</span>
+            <label class="switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </aside>
+    <div class="container preview-content">
+        
+        <div class="cover-section">
+            <div class="preview-image">
+                <img src="{{book.image}}" alt="{{book.title}}">
+            </div>
+            <div class="preview-info">
+                <div class="title-header">
+                    <h1>{{book.title}}</h1>
+                    <div class="rating-box">
+                        <span class="score">9.46</span>
+                    </div>
+                </div>
+                
+                <div class="preview-nav">
+                    <a href="#" class="active">Опис</a>
+                </div>
+                
+                <div class="description">
+                    <p>
+                        Темний– це друга частина популярної серії про короля Неверленду.
+                        Читачі знову зустрінуться з Пітером Пеном, Вінні Дарлінґ, Вейном та братами-близнюками Касом та Башем. Жанр твору – роман-ретелінг, це нова версія старої історії. Авторка не просто переказує сюжет книги про Пітера Пена, а переосмислює його, додає багато нового й створює свою унікальну історію. Нагадуємо, що роман призначений для дорослої аудиторії 18+.
+                    </p>
+                    <a href="#" style="color: #272526;">Деталі...</a>
+                </div>
+                
+                <div class="tags">
+                    <a href="#" class="tag-item">18+</a>
+                    <a href="#" class="tag-item">Історія</a>
+                    <a href="#" class="tag-item">Драма</a>
+                    <a href="#" class="tag-item">Повсякденність</a>
+                    <a href="#" class="tag-item">Романтика</a>
+                    <a href="#" class="tag-item">Фентезі</a>
+                    <a href="#" class="tag-item">Лицарі</a>
+                </div>
+
+            </div>
+        </div>
+        <div class="preview-layout">
+            
+            <aside class="sidebar-col">
+                <div class="sidebar-block">
+                    <button class="action-button btn-read">Читати</button>
+                    <button class="action-button btn-add" id="save-button" data-book-id="{{book.id}}">Додати у збережене</button>
+                </div>
+                
+                <div class="sidebar-block">
+                    <h4>Деталі</h4>
+                    <ul class="details-list">
+                        <li><strong>Жанр:</strong> <span>{{book.genre}}</span></li>
+                        <li><strong>Дата релізу:</strong> <span>2020 г.</span></li>
+                        <li><strong>Автор:</strong> <a href="/autor"><span>{{book.author}}</span></a></li>
+                    </ul>
+                </div>
+            </aside>
+            
+            <main class="main-col">
+<h3>Схоже</h3>
+                <div class="section-grid top-updates-grid" style="overflow-x: auto; display: flex; gap: 15px;">
+                    <a href="#" class="manga-card" style="width: 140px; flex-shrink: 0;">
+                        <img src="https://via.placeholder.com/140x250/2ecc71/ffffff?text=Схожее+1" alt="Схоже 1">
+                        <div class="manga-card-info">
+                            <h4>Схоже 1</h4>
+                        </div>
+                    </a>
+                    <a href="#" class="manga-card" style="width: 140px; flex-shrink: 0;">
+                        <img src="https://via.placeholder.com/140x250/3498db/ffffff?text=Схожее+2" alt="Схоже 2">
+                        <div class="manga-card-info">
+                            <h4>Схоже 2</h4>
+                        </div>
+                    </a>
+                    <a href="#" class="manga-card" style="width: 140px; flex-shrink: 0;">
+                        <img src="https://via.placeholder.com/140x250/f1c40f/ffffff?text=Схожее+3" alt="Схоже 3">
+                        <div class="manga-card-info">
+                            <h4>Схоже 3</h4>
+                        </div>
+                    </a>
+                    </div>
+                
+            </main>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2025 Library. Інформаційний портал</p>
+            <nav class="footer-nav">
+                <a href="#">Контакти</a>
+                <a href="#">Політика конфіденційності</a>
+            </nav>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('search-link').addEventListener('click', function(event) {
+            event.preventDefault(); 
+            var searchModal = document.getElementById('search-modal');
+            if (searchModal.style.display === 'block') {
+                searchModal.style.display = 'none';
+            } else {
+                searchModal.style.display = 'block';
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            var searchLink = document.getElementById('search-link');
+            var searchModal = document.getElementById('search-modal');
+            
+            if (searchModal.style.display === 'block' && 
+                !searchModal.contains(event.target) && 
+                !searchLink.contains(event.target)) {
+                searchModal.style.display = 'none';
+            }
+        });
+
+            document.getElementById('profile-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('profile-sidebar').classList.toggle('open');
+        });
+
+        document.getElementById('sidebar-close').addEventListener('click', function() {
+            document.getElementById('profile-sidebar').classList.remove('open');
+        });
+        
+        document.getElementById('theme-toggle').addEventListener('change', function() {
+            document.body.classList.toggle('dark-theme', this.checked);
+            
+            localStorage.setItem('theme', this.checked ? 'dark' : 'light');
+        });
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+            document.getElementById('theme-toggle').checked = true;
+        }
+
+        document.getElementById('save-button').addEventListener('click', function() {
+            const bookId = this.dataset.bookId; 
+
+
+        fetch('/save-book', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: bookId }) 
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message); 
+        })
+        .catch(error => {
+            console.error('Помилка:', error);
+            alert('Не вдалося зберегти книгу.');
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('main-search-input');
+    const resultsContainer = document.getElementById('search-results-container');
+
+    searchInput.addEventListener('keyup', function() {
+        const query = searchInput.value.trim();
+
+        if (query === '') {
+            resultsContainer.innerHTML = '';
+            return;
+        }
+
+        fetch(`/search?q=${query}`)
+            .then(response => response.json())
+            .then(books => {
+                resultsContainer.innerHTML = '';
+
+                books.forEach(book => {
+                    const bookElement = document.createElement('a');
+                    bookElement.href = `/home/preview/${book.id}`;
+                    bookElement.classList.add('search-result-item');
+                    
+                    bookElement.innerHTML = `
+                        <img src="${book.image}" alt="${book.title}" class="search-result-image">
+                        <span class="search-result-title">${book.title}</span>
+                    `;
+                    
+                    resultsContainer.appendChild(bookElement);
+                });
+            })
+            .catch(error => console.error('Помилка пошуку:', error));
+    });
+});
+</script>
+</body>
+</html>

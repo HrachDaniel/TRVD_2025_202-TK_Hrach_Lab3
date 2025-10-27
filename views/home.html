@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library | Головна</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-left">
+            <span class="header-logo">Library</span>
+            <nav class="main-nav">
+                <a href="/home/catalog">Каталог</a>
+                <a href="#" id="search-link">Пошук</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <a href="#" id="profile-link" class="btn-login" style="text-decoration: none;">Профіль</a>
+        </div>
+        
+        <div id="search-modal" class="search-modal">
+            <input type="text" id="main-search-input" class="search-input-main" placeholder="Пошук тайтлів">
+            
+            <div class="search-tabs"></div>
+            <div id="search-results-container"></div>            
+            <p class="search-info">Розширений пошук тайтлів знаходиться в каталозі</p>
+        </div>
+    </header>
+    
+    <aside id="profile-sidebar" class="profile-sidebar">
+        <div class="sidebar-header">
+            <h3>Профіль: {{session.user.login}}</h3>
+            <button class="sidebar-close" id="sidebar-close">&times;</button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="#">📖 Прочитане</a>
+            <a href="/savage">⭐ Збережене</a>
+            <a href="/logout">🚪 Вихід</a>
+        </nav>
+        
+        <div class="theme-switch-block">
+            <span>Темне оформлення</span>
+            <label class="switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </aside>
+    <div class="container">
+        
+        <h2>Оновлення за сьогодні</h2>
+        <div class="section-grid top-updates-grid">
+            
+            {{#books}}
+            <a href="/home/preview/{{id}}" class="manga-card">
+                <img src="{{image}}" alt="{{title}}">
+                <div class="manga-card-info">
+                    <h4>{{title}}</h4>
+                    <p>{{genre}}</p>
+                </div>
+            </a>
+            {{/books}}
+            
+            <a href="#" class="manga-card">
+                <img src="https://via.placeholder.com/150x250/9b59b6/ffffff?text=Книга+2" alt="Книга 2">
+                <div class="manga-card-info">
+                    <h4>Книга 2</h4>
+                    <p>Фантастика</p>
+                </div>
+            </a>
+
+            <a href="/home/preview/{{id}}" class="manga-card">
+                <img src="https://book24.ua/upload/iblock/0e1/0e1d260914818c00aca1bb76e08c39be.jpg" alt="Книга 1">
+                <div class="manga-card-info">
+                    <h4>Темний</h4>
+                    <p>Роман</p>
+                </div>
+            </a>
+            
+            <a href="#" class="manga-card">
+                <img src="https://via.placeholder.com/150x250/3498db/ffffff?text=Книга+3" alt="Книга 3">
+                <div class="manga-card-info">
+                    <h4>Книга 3</h4>
+                    <p>Детектив</p>
+                </div>
+            </a>
+
+            <a href="#" class="manga-card">
+                <img src="https://via.placeholder.com/150x250/e67e22/ffffff?text=Книга+4" alt="Книга 4">
+                <div class="manga-card-info">
+                    <h4>Книга 4</h4>
+                    <p>Фентезі</p>
+                </div>
+            </a>
+
+            <a href="/home/preview/{{id}}" class="manga-card">
+                <img src="https://book24.ua/upload/iblock/0e1/0e1d260914818c00aca1bb76e08c39be.jpg" alt="Книга 1">
+                <div class="manga-card-info">
+                    <h4>Темний</h4>
+                    <p>Роман</p>
+                </div>
+            </a>
+
+            <a href="#" class="manga-card">
+                <img src="https://via.placeholder.com/150x250/2ecc71/ffffff?text=Книга+5" alt="Книга 5">
+                <div class="manga-card-info">
+                    <h4>Книга 5</h4>
+                    <p>Трилер</p>
+                </div>
+            </a>
+
+            <a href="#" class="manga-card">
+                <img src="https://via.placeholder.com/150x250/f1c40f/ffffff?text=Книга+6" alt="Книга 6">
+                <div class="manga-card-info">
+                    <h4>Книга 6</h4>
+                    <p>Історичний</p>
+                </div>
+            </a>
+
+            <a href="/home/preview/{{id}}" class="manga-card">
+                <img src="https://book24.ua/upload/iblock/0e1/0e1d260914818c00aca1bb76e08c39be.jpg" alt="Книга 1">
+                <div class="manga-card-info">
+                    <h4>Темний</h4>
+                    <p>Роман</p>
+                </div>
+            </a>
+            
+            <a href="#" class="manga-card">
+                <img src="https://via.placeholder.com/150x250/8e44ad/ffffff?text=Книга+7" alt="Книга 7">
+                <div class="manga-card-info">
+                    <h4>Книга 7 (New)</h4>
+                    <p>Містика</p>
+                </div>
+            </a>
+            
+            <a href="#" class="manga-card">
+                <img src="https://via.placeholder.com/150x250/1abc9c/ffffff?text=Книга+8" alt="Книга 8">
+                <div class="manga-card-info">
+                    <h4>Книга 8 (New)</h4>
+                    <p>Пригоди</p>
+                </div>
+            </a>
+
+        </div>
+        
+        <div class="index-sections">
+            <div class="section-block">
+                <h3>Зараз читають</h3> 
+                
+                {{#books}}
+                <a href="/preview/{{id}}" class="list-item">
+                    <img src="{{image}}" alt="{{title}}">
+                    <div class="manga-card-info">
+                        <h4>{{title}}</h4>
+                        <p>{{genre}}</p>
+                    </div>
+                </a>
+                {{/books}}
+            </div>
+
+            <div class="section-block">
+                <h3>Набирає популярність</h3>
+                
+                <a href="#" class="list-item">
+                    <img src="https://via.placeholder.com/60x80/95a5a6/ffffff?text=Ут" alt="Книга 12">
+                    <div class="list-item-info">
+                        <h4>Книга 12</h4>
+                        <p>Трилер</p>
+                    </div>
+                </a>
+                
+                <a href="#" class="list-item">
+                    <img src="https://via.placeholder.com/60x80/1abc9c/ffffff?text=Лю" alt="Книга 13">
+                    <div class="list-item-info">
+                        <h4>Книга 13</h4>
+                        <p>Історичний</p>
+                    </div>
+                </a>
+
+                <a href="#" class="list-item">
+                    <img src="https://via.placeholder.com/60x80/f39c12/ffffff?text=Я+пр" alt="Книга 14">
+                    <div class="list-item-info">
+                        <h4>Книга 14</h4>
+                        <p>Фентезі</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="section-block">
+                <h3>Популярне</h3>
+                
+                <a href="#" class="list-item">
+                    <img src="https://via.placeholder.com/60x80/8e44ad/ffffff?text=Как" alt="Книга 15">
+                    <div class="list-item-info">
+                        <h4>Книга 15</h4>
+                        <p>Роман</p>
+                    </div>
+                </a>
+                
+                <a href="#" class="list-item">
+                    <img src="https://via.placeholder.com/60x80/c0392b/ffffff?text=Да" alt="Книга 16">
+                    <div class="list-item-info">
+                        <h4>Книга 16</h4>
+                        <p>Комікс</p>
+                    </div>
+                </a>
+
+                <a href="#" class="list-item">
+                    <img src="https://via.placeholder.com/60x80/27ae60/ffffff?text=Ва" alt="Книга 17">
+                    <div class="list-item-info">
+                        <h4>Книга 17</h4>
+                        <p>Манга</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2025 Library. Інформаційний портал</p>
+            <nav class="footer-nav">
+                <a href="#">Контакти</a>
+                <a href="#">Політика конфіденційності</a>
+            </nav>
+        </div>
+    </footer>
+<script>
+        document.getElementById('profile-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('profile-sidebar').classList.toggle('open');
+        });
+
+        document.getElementById('sidebar-close').addEventListener('click', function() {
+            document.getElementById('profile-sidebar').classList.remove('open');
+        });
+        
+        document.getElementById('theme-toggle').addEventListener('change', function() {
+            document.body.classList.toggle('dark-theme', this.checked);
+            
+            localStorage.setItem('theme', this.checked ? 'dark' : 'light');
+        });
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+            document.getElementById('theme-toggle').checked = true;
+        }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const searchLink = document.getElementById('search-link');
+    const searchModal = document.getElementById('search-modal');
+    const searchInput = document.getElementById('main-search-input');
+    const resultsContainer = document.getElementById('search-results-container');
+    const profileLink = document.getElementById('profile-link');
+    const profileSidebar = document.getElementById('profile-sidebar');
+    const sidebarClose = document.getElementById('sidebar-close');
+    const themeToggle = document.getElementById('theme-toggle');
+
+    if (searchLink && searchModal) {
+        searchLink.addEventListener('click', function(event) {
+            event.preventDefault(); 
+            searchModal.style.display = (searchModal.style.display === 'block') ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', function(event) {
+            if (searchModal.style.display === 'block' && !searchModal.contains(event.target) && !searchLink.contains(event.target)) {
+                searchModal.style.display = 'none';
+            }
+        });
+    }
+
+    if (searchInput && resultsContainer) {
+        searchInput.addEventListener('keyup', function() {
+            const query = searchInput.value.trim();
+            if (query === '') {
+                resultsContainer.innerHTML = '';
+                return;
+            }
+            fetch(`/search?q=${query}`)
+                .then(response => response.json())
+                .then(books => {
+                    resultsContainer.innerHTML = '';
+                    books.forEach(book => {
+                        const bookElement = document.createElement('a');
+                        bookElement.href = `/home/preview/${book._id}`;
+                        bookElement.classList.add('search-result-item');
+                        bookElement.innerHTML = `
+                            <img src="${book.image}" alt="${book.title}" class="search-result-image">
+                            <span class="search-result-title">${book.title}</span>`;
+                        resultsContainer.appendChild(bookElement);
+                    });
+                })
+                .catch(error => console.error('Помилка пошуку:', error));
+        });
+    }
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library | Збережене</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-left">
+            <span class="header-logo">Library</span>
+            <nav class="main-nav">
+                <a href="/home">Головна</a>
+                <a href="/home/catalog">Каталог</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <a href="#" id="profile-link" class="btn-login" style="text-decoration: none;">Профіль</a>
+        </div>
+    </header>
+    <aside id="profile-sidebar" class="profile-sidebar">
+        <div class="sidebar-header">
+            <h3>Профіль</h3>
+            <button class="sidebar-close" id="sidebar-close">&times;</button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="#">📖 Прочитане</a>
+            <a href="#">⭐ Збережене</a>
+            <a href="/">🚪 Вихід</a>
+        </nav>
+        
+        <div class="theme-switch-block">
+            <span>Темне оформлення</span>
+            <label class="switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </aside>
+    <div class="container catalog-layout">
+        
+        <main class="catalog-main" id="saved-container">
+            <div class="catalog-header">
+                <h2><span>Збережене</span></h2>
+            </div>
+            <div class="section-grid catalog-grid-page">
+
+            {{#books}}
+            <div class="manga-card">
+                <a href="/preview/{{id}}">
+                    <img src="{{image}}" alt="{{title}}">
+                </a>
+                    <div class="manga-card-info">
+                        <h4>{{title}}</h4>
+                        <p>{{genre}}</p>
+                        <button class="btn-remove" data-book-id="{{id}}">Вилучити</button>
+                    </div>
+            </div>
+            {{/books}}
+        </main>
+            <div id="custom-context-menu" class="context-menu">
+            <button id="context-menu-delete-btn" class="context-menu-btn">Вилучити</button>
+            </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2025 Library. Інформаційний портал</p>
+            <nav class="footer-nav">
+                <a href="#">Контакти</a>
+                <a href="#">Політика конфіденційності</a>
+            </nav>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('profile-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('profile-sidebar').classList.toggle('open');
+        });
+
+        document.getElementById('sidebar-close').addEventListener('click', function() {
+            document.getElementById('profile-sidebar').classList.remove('open');
+        });
+        
+        document.getElementById('theme-toggle').addEventListener('change', function() {
+            document.body.classList.toggle('dark-theme', this.checked);
+            
+            localStorage.setItem('theme', this.checked ? 'dark' : 'light');
+        });
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+            document.getElementById('theme-toggle').checked = true;
+        }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('saved-container');
+    const contextMenu = document.getElementById('custom-context-menu');
+    const contextMenuDeleteBtn = document.getElementById('context-menu-delete-btn');
+
+    if (!container || !contextMenu || !contextMenuDeleteBtn) {
+        return;
+    }
+
+    function deleteBook(bookId) {
+        fetch(`/saved/delete/${bookId}`, {
+            method: 'DELETE',
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                location.reload();
+            } else {
+                alert('Помилка: ' + data.message);
+            }
+        })
+        .catch(error => console.error('Помилка:', error));
+    }
+
+    container.addEventListener('contextmenu', function(event) {
+        const card = event.target.closest('.manga-card');
+        if (card) {
+            event.preventDefault(); 
+
+            const deleteButton = card.querySelector('[data-book-id]');
+            if (!deleteButton) return;
+            
+            const bookId = deleteButton.dataset.bookId;
+            contextMenuDeleteBtn.dataset.bookId = bookId;
+            const cardRect = card.getBoundingClientRect();
+            const topPosition = cardRect.top + cardRect.height / 2 + window.scrollY;
+            const leftPosition = cardRect.left + cardRect.width / 2 + window.scrollX;
+            contextMenu.style.top = `${topPosition}px`;
+            contextMenu.style.left = `${leftPosition}px`;
+            contextMenu.style.display = 'block'; 
+        }
+    });
+
+    document.addEventListener('click', function(event) {
+        if (event.target.id === 'context-menu-delete-btn') {
+            const bookId = event.target.dataset.bookId;
+            if (confirm('Ви впевнені, що хочете вилучити цю книгу?')) {
+                deleteBook(bookId);
+            }
+        }
+        
+        if (!contextMenu.contains(event.target)) {
+            contextMenu.style.display = 'none';
+        }
+    });
+});
+    </script>
+</body>
+</html>
