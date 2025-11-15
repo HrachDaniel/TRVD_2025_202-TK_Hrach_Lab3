@@ -151,7 +151,7 @@ router.get('/collection/:id', async (req, res) => {
         if (!collection) {
             return res.status(404).send('Колекцію не знайдено.');
         }
-        const books = await Book.find({ collection: req.params.id }).populate('author');
+        const books = await Book.find({ bookSeries: req.params.id }).populate('author');
         
         res.render('collection.html', { collection: collection, books: books });
     } catch (error) {

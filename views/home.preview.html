@@ -243,6 +243,12 @@
                         <span class="score">{{book.score}}</span>
                     </div>
                 </div>
+                    {{#book.bookSeries}}
+                        <h3 style="margin-top: 0; font-weight: 500;">
+                            Частина колекції: 
+                            <a href="/collection/{{_id}}">{{title}}</a>
+                        </h3>
+                    {{/book.bookSeries}}
                 
                 <div class="preview-nav">
                     <a href="#" class="active">Опис</a>
