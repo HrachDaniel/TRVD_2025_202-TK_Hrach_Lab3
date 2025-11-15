@@ -55,7 +55,7 @@
         <div class="section-grid top-updates-grid">
             
             {{#books}}
-            <a href="/home/preview/{{id}}" class="manga-card">
+            <a href="/home/preview/{{_id}}" class="manga-card">
                 <img src="{{image}}" alt="{{title}}">
                 <div class="manga-card-info">
                     <h4>{{title}}</h4>
@@ -72,7 +72,7 @@
                 </div>
             </a>
 
-            <a href="/home/preview/{{id}}" class="manga-card">
+            <a href="/home/preview/{{_id}}" class="manga-card">
                 <img src="https://book24.ua/upload/iblock/0e1/0e1d260914818c00aca1bb76e08c39be.jpg" alt="Книга 1">
                 <div class="manga-card-info">
                     <h4>Темний</h4>
@@ -96,7 +96,7 @@
                 </div>
             </a>
 
-            <a href="/home/preview/{{id}}" class="manga-card">
+            <a href="/home/preview/{{_id}}" class="manga-card">
                 <img src="https://book24.ua/upload/iblock/0e1/0e1d260914818c00aca1bb76e08c39be.jpg" alt="Книга 1">
                 <div class="manga-card-info">
                     <h4>Темний</h4>
@@ -120,7 +120,7 @@
                 </div>
             </a>
 
-            <a href="/home/preview/{{id}}" class="manga-card">
+            <a href="/home/preview/{{_id}}" class="manga-card">
                 <img src="https://book24.ua/upload/iblock/0e1/0e1d260914818c00aca1bb76e08c39be.jpg" alt="Книга 1">
                 <div class="manga-card-info">
                     <h4>Темний</h4>
@@ -151,7 +151,7 @@
                 <h3>Зараз читають</h3> 
                 
                 {{#books}}
-                <a href="/preview/{{id}}" class="list-item">
+                <a href="/home/preview/{{_id}}" class="list-item">
                     <img src="{{image}}" alt="{{title}}">
                     <div class="manga-card-info">
                         <h4>{{title}}</h4>
@@ -229,75 +229,7 @@
             </nav>
         </div>
     </footer>
-<script>
-        document.getElementById('profile-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            document.getElementById('profile-sidebar').classList.toggle('open');
-        });
-
-        document.getElementById('sidebar-close').addEventListener('click', function() {
-            document.getElementById('profile-sidebar').classList.remove('open');
-        });
-        
-        document.getElementById('theme-toggle').addEventListener('change', function() {
-            document.body.classList.toggle('dark-theme', this.checked);
-            
-            localStorage.setItem('theme', this.checked ? 'dark' : 'light');
-        });
-
-        if (localStorage.getItem('theme') === 'dark') {
-            document.body.classList.add('dark-theme');
-            document.getElementById('theme-toggle').checked = true;
-        }
-
-document.addEventListener('DOMContentLoaded', function() {
-    const searchLink = document.getElementById('search-link');
-    const searchModal = document.getElementById('search-modal');
-    const searchInput = document.getElementById('main-search-input');
-    const resultsContainer = document.getElementById('search-results-container');
-    const profileLink = document.getElementById('profile-link');
-    const profileSidebar = document.getElementById('profile-sidebar');
-    const sidebarClose = document.getElementById('sidebar-close');
-    const themeToggle = document.getElementById('theme-toggle');
-
-    if (searchLink && searchModal) {
-        searchLink.addEventListener('click', function(event) {
-            event.preventDefault(); 
-            searchModal.style.display = (searchModal.style.display === 'block') ? 'none' : 'block';
-        });
-
-        document.addEventListener('click', function(event) {
-            if (searchModal.style.display === 'block' && !searchModal.contains(event.target) && !searchLink.contains(event.target)) {
-                searchModal.style.display = 'none';
-            }
-        });
-    }
-
-    if (searchInput && resultsContainer) {
-        searchInput.addEventListener('keyup', function() {
-            const query = searchInput.value.trim();
-            if (query === '') {
-                resultsContainer.innerHTML = '';
-                return;
-            }
-            fetch(`/search?q=${query}`)
-                .then(response => response.json())
-                .then(books => {
-                    resultsContainer.innerHTML = '';
-                    books.forEach(book => {
-                        const bookElement = document.createElement('a');
-                        bookElement.href = `/home/preview/${book._id}`;
-                        bookElement.classList.add('search-result-item');
-                        bookElement.innerHTML = `
-                            <img src="${book.image}" alt="${book.title}" class="search-result-image">
-                            <span class="search-result-title">${book.title}</span>`;
-                        resultsContainer.appendChild(bookElement);
-                    });
-                })
-                .catch(error => console.error('Помилка пошуку:', error));
-        });
-    }
-});
+    <script src="/script.js" defer>
     </script>
 </body>
 </html>

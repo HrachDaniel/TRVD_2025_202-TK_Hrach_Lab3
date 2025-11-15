@@ -219,62 +219,7 @@
             </nav>
         </div>
     </footer>
-<script>
-        document.getElementById('search-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            var searchModal = document.getElementById('search-modal');
-            
-            if (searchModal.style.display === 'block') {
-                searchModal.style.display = 'none';
-            } else {
-                searchModal.style.display = 'block';
-            }
-        });
-
-        document.addEventListener('click', function(event) {
-            var searchLink = document.getElementById('search-link');
-            var searchModal = document.getElementById('search-modal');
-            
-            if (searchModal.style.display === 'block' && 
-                !searchModal.contains(event.target) && 
-                !searchLink.contains(event.target)) {
-                searchModal.style.display = 'none';
-            }
-        });
-    
-    document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('main-search-input');
-    const resultsContainer = document.getElementById('search-results-container');
-
-    searchInput.addEventListener('keyup', function() {
-        const query = searchInput.value.trim();
-
-        if (query === '') {
-            resultsContainer.innerHTML = '';
-            return;
-        }
-
-        fetch(`/search?q=${query}`)
-            .then(response => response.json())
-            .then(books => {
-                resultsContainer.innerHTML = '';
-
-                books.forEach(book => {
-                    const bookElement = document.createElement('a');
-                    bookElement.href = `/preview/${book.id}`;
-                    bookElement.classList.add('search-result-item');
-                    
-                    bookElement.innerHTML = `
-                        <img src="${book.image}" alt="${book.title}" class="search-result-image">
-                        <span class="search-result-title">${book.title}</span>
-                    `;
-                    
-                    resultsContainer.appendChild(bookElement);
-                });
-            })
-            .catch(error => console.error('Помилка пошуку:', error));
-    });
-});
+    <script src="/script.js" defer>
     </script>
 </body>
 </html>

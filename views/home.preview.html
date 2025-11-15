@@ -240,7 +240,7 @@
                 <div class="title-header">
                     <h1>{{book.title}}</h1>
                     <div class="rating-box">
-                        <span class="score">9.46</span>
+                        <span class="score">{{book.score}}</span>
                     </div>
                 </div>
                 
@@ -250,20 +250,14 @@
                 
                 <div class="description">
                     <p>
-                        Темний– це друга частина популярної серії про короля Неверленду.
-                        Читачі знову зустрінуться з Пітером Пеном, Вінні Дарлінґ, Вейном та братами-близнюками Касом та Башем. Жанр твору – роман-ретелінг, це нова версія старої історії. Авторка не просто переказує сюжет книги про Пітера Пена, а переосмислює його, додає багато нового й створює свою унікальну історію. Нагадуємо, що роман призначений для дорослої аудиторії 18+.
+                        {{book.description}}
                     </p>
-                    <a href="#" style="color: #272526;">Деталі...</a>
                 </div>
                 
                 <div class="tags">
-                    <a href="#" class="tag-item">18+</a>
-                    <a href="#" class="tag-item">Історія</a>
-                    <a href="#" class="tag-item">Драма</a>
-                    <a href="#" class="tag-item">Повсякденність</a>
-                    <a href="#" class="tag-item">Романтика</a>
-                    <a href="#" class="tag-item">Фентезі</a>
-                    <a href="#" class="tag-item">Лицарі</a>
+                {{#book.tags}}
+                    <a href="#" class="tag-item">{{.}}</a>
+                {{/book.tags}}
                 </div>
 
             </div>
@@ -280,7 +274,7 @@
                     <h4>Деталі</h4>
                     <ul class="details-list">
                         <li><strong>Жанр:</strong> <span>{{book.genre}}</span></li>
-                        <li><strong>Дата релізу:</strong> <span>2020 г.</span></li>
+                        <li><strong>Дата релізу:</strong> <span>{{book.release}}</span></li>
                         <li><strong>Автор:</strong> <a href="/autor"><span>{{book.author}}</span></a></li>
                     </ul>
                 </div>
@@ -323,102 +317,7 @@
             </nav>
         </div>
     </footer>
-    <script>
-        document.getElementById('search-link').addEventListener('click', function(event) {
-            event.preventDefault(); 
-            var searchModal = document.getElementById('search-modal');
-            if (searchModal.style.display === 'block') {
-                searchModal.style.display = 'none';
-            } else {
-                searchModal.style.display = 'block';
-            }
-        });
-
-        document.addEventListener('click', function(event) {
-            var searchLink = document.getElementById('search-link');
-            var searchModal = document.getElementById('search-modal');
-            
-            if (searchModal.style.display === 'block' && 
-                !searchModal.contains(event.target) && 
-                !searchLink.contains(event.target)) {
-                searchModal.style.display = 'none';
-            }
-        });
-
-            document.getElementById('profile-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            document.getElementById('profile-sidebar').classList.toggle('open');
-        });
-
-        document.getElementById('sidebar-close').addEventListener('click', function() {
-            document.getElementById('profile-sidebar').classList.remove('open');
-        });
-        
-        document.getElementById('theme-toggle').addEventListener('change', function() {
-            document.body.classList.toggle('dark-theme', this.checked);
-            
-            localStorage.setItem('theme', this.checked ? 'dark' : 'light');
-        });
-
-        if (localStorage.getItem('theme') === 'dark') {
-            document.body.classList.add('dark-theme');
-            document.getElementById('theme-toggle').checked = true;
-        }
-
-        document.getElementById('save-button').addEventListener('click', function() {
-            const bookId = this.dataset.bookId; 
-
-
-        fetch('/save-book', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id: bookId }) 
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message); 
-        })
-        .catch(error => {
-            console.error('Помилка:', error);
-            alert('Не вдалося зберегти книгу.');
-        });
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('main-search-input');
-    const resultsContainer = document.getElementById('search-results-container');
-
-    searchInput.addEventListener('keyup', function() {
-        const query = searchInput.value.trim();
-
-        if (query === '') {
-            resultsContainer.innerHTML = '';
-            return;
-        }
-
-        fetch(`/search?q=${query}`)
-            .then(response => response.json())
-            .then(books => {
-                resultsContainer.innerHTML = '';
-
-                books.forEach(book => {
-                    const bookElement = document.createElement('a');
-                    bookElement.href = `/home/preview/${book.id}`;
-                    bookElement.classList.add('search-result-item');
-                    
-                    bookElement.innerHTML = `
-                        <img src="${book.image}" alt="${book.title}" class="search-result-image">
-                        <span class="search-result-title">${book.title}</span>
-                    `;
-                    
-                    resultsContainer.appendChild(bookElement);
-                });
-            })
-            .catch(error => console.error('Помилка пошуку:', error));
-    });
-});
-</script>
+    <script src="/script.js" defer>
+    </script>
 </body>
 </html>

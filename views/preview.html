@@ -244,7 +244,7 @@
                 <div class="title-header">
                     <h1>{{book.title}}</h1>
                     <div class="rating-box">
-                        <span class="score">9.46</span>
+                        <span class="score">{{book.score}}</span>
                     </div>
 </div>
                 
@@ -254,20 +254,14 @@
                 
                 <div class="description">
                     <p>
-                        Темний– це друга частина популярної серії про короля Неверленду.
-                        Читачі знову зустрінуться з Пітером Пеном, Вінні Дарлінґ, Вейном та братами-близнюками Касом та Башем. Жанр твору – роман-ретелінг, це нова версія старої історії. Авторка не просто переказує сюжет книги про Пітера Пена, а переосмислює його, додає багато нового й створює свою унікальну історію. Нагадуємо, що роман призначений для дорослої аудиторії 18+.
+                        {{book.description}}
                     </p>
-                    <a href="#" style="color: #2d2d2d;">Деталі...</a>
                 </div>
                 
                 <div class="tags">
-                    <a href="#" class="tag-item">18+</a>
-                    <a href="#" class="tag-item">Історія</a>
-                    <a href="#" class="tag-item">Драма</a>
-                    <a href="#" class="tag-item">Повсякденність</a>
-                    <a href="#" class="tag-item">Романтика</a>
-                    <a href="#" class="tag-item">Фентезі</a>
-                    <a href="#" class="tag-item">Лицарі</a>
+                    {{#book.tags}}
+                        <a href="#" class="tag-item">{{.}}</a>
+                    {{/book.tags}}
                 </div>
 
             </div>
@@ -283,9 +277,9 @@
                 <div class="sidebar-block">
                     <h4>Деталі</h4>
                     <ul class="details-list">
-                        <li><strong>Жанр:</strong> <span>Роман</span></li>
-                        <li><strong>Дата релізу:</strong> <span>2020 г.</span></li>
-                        <li><strong>Автор:</strong> <a href="/login"><span>Ніккі Сент-Кроу</span></a></li>
+                        <li><strong>Жанр:</strong> <span>{{book.genre}}</span></li>
+                        <li><strong>Дата релізу:</strong> <span>{{book.release}}</span></li>
+                        <li><strong>Автор:</strong> <a href="/login"><span>{{book.author}}</span></a></li>
                     </ul>
                 </div>
             </aside>
@@ -328,61 +322,7 @@
         </div>
     </footer>
 
-    <script>
-        document.getElementById('search-link').addEventListener('click', function(event) {
-            event.preventDefault(); 
-            var searchModal = document.getElementById('search-modal');
-            if (searchModal.style.display === 'block') {
-                searchModal.style.display = 'none';
-            } else {
-                searchModal.style.display = 'block';
-            }
-        });
-
-        document.addEventListener('click', function(event) {
-            var searchLink = document.getElementById('search-link');
-            var searchModal = document.getElementById('search-modal');
-            
-            if (searchModal.style.display === 'block' && 
-                !searchModal.contains(event.target) && 
-                !searchLink.contains(event.target)) {
-                searchModal.style.display = 'none';
-            }
-        });
-
-    document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('main-search-input');
-    const resultsContainer = document.getElementById('search-results-container');
-
-    searchInput.addEventListener('keyup', function() {
-        const query = searchInput.value.trim();
-
-        if (query === '') {
-            resultsContainer.innerHTML = '';
-            return;
-        }
-
-        fetch(`/search?q=${query}`)
-            .then(response => response.json())
-            .then(books => {
-                resultsContainer.innerHTML = '';
-
-                books.forEach(book => {
-                    const bookElement = document.createElement('a');
-                    bookElement.href = `/preview/${book.id}`;
-                    bookElement.classList.add('search-result-item');
-                    
-                    bookElement.innerHTML = `
-                        <img src="${book.image}" alt="${book.title}" class="search-result-image">
-                        <span class="search-result-title">${book.title}</span>
-                    `;
-                    
-                    resultsContainer.appendChild(bookElement);
-                });
-            })
-            .catch(error => console.error('Помилка пошуку:', error));
-    });
-});
+    <script src="/script.js" defer>
     </script>
 </body>
 </html>

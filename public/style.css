@@ -599,7 +599,8 @@ body.dark-theme h4,
 body.dark-theme p,
 body.dark-theme li,
 body.dark-theme .sidebar-header h3,
-body.dark-theme .details-list li span {
+body.dark-theme .details-list li span,
+body.dark-theme .preview-nav a {
     color: #f4f4f4;
 }
 
