@@ -20,11 +20,11 @@
         </div>
         <div class="header-right">
             {{#session.user}}
-                <a href="/login" class="btn-login">Вхід</a>
-                <a href="/register" class="btn-register">Реєстрація</a>
+                <a href="#" id="profile-link" class="btn-login">Профіль</a>
             {{/session.user}}
             {{^session.user}}
-                <a href="#" id="profile-link" class="btn-login">Профіль</a>
+                <a href="/login" class="btn-login">Вхід</a>
+                <a href="/register" class="btn-register">Реєстрація</a>
             {{/session.user}}
         </div>
         
