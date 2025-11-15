@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library | Автор</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Library | Каталог</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
@@ -13,7 +13,6 @@
             <span class="header-logo">Library</span>
             <nav class="main-nav">
                 <a href="/home">Головна</a>
-                <a href="/home.catalog">Каталог</a>
             </nav>
         </div>
         <div class="header-right">
@@ -44,12 +43,12 @@
         
         <main class="catalog-main">
             <div class="catalog-header">
-                <h2>Ніккі Сент-Кроу</h2>
+                <h2>{{collection.title}}</h2>
             </div>
 
             <div class="section-grid catalog-grid-page">
                 {{#books}}
-                <a href="/preview/{{id}}" class="manga-card">
+                <a href="/home/preview/{{id}}" class="manga-card">
                     <img src="{{image}}" alt="{{title}}">
                     <div class="manga-card-info">
                         <h4>{{title}}</h4>

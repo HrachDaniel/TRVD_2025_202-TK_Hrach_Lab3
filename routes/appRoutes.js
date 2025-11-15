@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
-const Book = require('../models/book'); 
+const User = require('../models/user');
+const Book = require('../models/book');
+const Author = require('../models/author');
+const BookCollection = require('../models/bookCollection');
 const isAuthenticated = (req, res, next) => {
     if (req.session.user) {
         return next(); 
@@ -19,6 +21,7 @@ router.post('/register', async (req, res) => {
         console.log('Отримано дані з форми:', req.body);
 
         const userExists = await User.findOne({ $or: [{ email: email }, { login: login }] });
+        
         if (userExists) {
             console.log('Користувач вже існує. Реєстрацію скасовано.');
             return res.status(400).send('Користувач з таким email або логіном вже існує.');
@@ -28,11 +31,12 @@ router.post('/register', async (req, res) => {
         const user = new User({ login, email, password, age, gender });
         await user.save(); 
         console.log('✅ Користувача успішно збережено в MongoDB!');
+        
         res.redirect('/login');
 
     } catch (error) {
         console.error('❌ ПОМИЛКА ПРИ ЗБЕРЕЖЕННІ В MONGODB:', error);
-        res.status(500).send('Не вдалося зареєструвати користувача. Перевірте консоль сервера.');
+        res.status(500).send('Не вдалося зареєструвати користувача.');
     }
 });
 
@@ -64,7 +68,7 @@ router.post('/login', async (req, res) => {
 router.get('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
-            return res.redirect('/home')
+            return res.redirect('/home');
         }
         res.clearCookie('connect.sid'); 
         res.redirect('/');
@@ -73,7 +77,10 @@ router.get('/logout', (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const books = await Book.find({}).limit(12);
+        const books = await Book.find({})
+            .populate('author')
+            .populate('bookSeries')
+            .limit(12);
         res.render('index.html', { books: books });
 
     } catch (error) {
@@ -84,7 +91,9 @@ router.get('/', async (req, res) => {
 
 router.get('/home', isAuthenticated, async (req, res) => {
     try {
-        const books = await Book.find({});
+        const books = await Book.find({})
+            .populate('author')
+            .populate('bookSeries');
         res.render('home.html', { books });
     } catch (error) {
         res.status(500).send('Не вдалося завантажити книги.');
@@ -93,7 +102,9 @@ router.get('/home', isAuthenticated, async (req, res) => {
 
 router.get(['/catalog', '/home/catalog'], async (req, res) => {
     try {
-        const books = await Book.find({});
+        const books = await Book.find({})
+            .populate('author')
+            .populate('bookSeries');
         const template = req.path.includes('/home') ? 'home.catalog.html' : 'catalog.html';
         res.render(template, { books });
     } catch (error) {
@@ -103,7 +114,11 @@ router.get(['/catalog', '/home/catalog'], async (req, res) => {
 
 router.get(['/preview/:id', '/home/preview/:id'], async (req, res) => {
     try {
-        const book = await Book.findById(req.params.id);
+        const bookId = parseInt(req.params.id, 10);
+        const book = await Book.findOne({ _id: bookId }) 
+            .populate('author')  
+            .populate('bookSeries'); 
+        
         if (book) {
             const template = req.path.includes('/home') ? 'home.preview.html' : 'preview.html';
             res.render(template, { book });
@@ -111,23 +126,45 @@ router.get(['/preview/:id', '/home/preview/:id'], async (req, res) => {
             res.status(404).send('Книгу не знайдено.');
         }
     } catch (error) {
-        res.status(500).send('Невірний ID книги.');
+        console.error("Помилка на маршруті preview:", error);
+        res.status(500).send('Невірний ID книги або помилка сервера.');
     }
 });
 
-router.get('/autor', async (req, res) => {
+router.get('/author/:id', async (req, res) => {
     try {
-        const authorName = 'Ніккі Сент-Кроу';
-        const books = await Book.find({ author: authorName });
-        res.render('autor.html', { authorName, books });
+        const author = await Author.findById(req.params.id);
+        if (!author) {
+            return res.status(404).send('Автора не знайдено.');
+        }
+        const books = await Book.find({ author: req.params.id }).populate('bookSeries');
+        
+        res.render('author.html', { author: author, books: books });
     } catch (error) {
-        res.status(500).send('Не вдалося завантажити книги автора.');
+        res.status(500).send('Помилка завантаження сторінки автора.');
+    }
+});
+
+router.get('/collection/:id', async (req, res) => {
+    try {
+        const collection = await BookCollection.findById(req.params.id);
+        if (!collection) {
+            return res.status(404).send('Колекцію не знайдено.');
+        }
+        const books = await Book.find({ collection: req.params.id }).populate('author');
+        
+        res.render('collection.html', { collection: collection, books: books });
+    } catch (error) {
+        res.status(500).send('Помилка завантаження сторінки колекції.');
     }
 });
 
 router.get('/savage', isAuthenticated, async (req, res) => {
     try {
-        const user = await User.findById(req.session.user.id).populate('savedBooks');
+        const user = await User.findById(req.session.user.id).populate({
+            path: 'savedBooks',
+            populate: { path: 'author' }
+        });
         res.render('savage.html', { books: user.savedBooks });
     } catch (error) {
         res.status(500).send('Не вдалося завантажити збережені книги.');
@@ -136,7 +173,7 @@ router.get('/savage', isAuthenticated, async (req, res) => {
 
 router.post('/save-book', isAuthenticated, async (req, res) => {
     try {
-        const bookIdToSave = req.body.id;
+        const bookIdToSave = req.body.id; 
         await User.findByIdAndUpdate(req.session.user.id, {
             $addToSet: { savedBooks: bookIdToSave }
         });
@@ -161,7 +198,8 @@ router.delete('/saved/delete/:id', isAuthenticated, async (req, res) => {
 router.get('/search', async (req, res) => {
     try {
         const query = req.query.q || '';
-        const results = await Book.find({ title: { $regex: query, $options: 'i' } });
+        const results = await Book.find({ title: { $regex: query, $options: 'i' } })
+            .populate('author');
         res.json(results);
     } catch (error) {
         res.status(500).json([]);

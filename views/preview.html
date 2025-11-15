@@ -246,7 +246,13 @@
                     <div class="rating-box">
                         <span class="score">{{book.score}}</span>
                     </div>
-</div>
+                </div>
+                    {{#book.bookSeries}}
+                        <h3 style="margin-top: 0; font-weight: 500;">
+                            Частина колекції: 
+                            <a href="/collection/{{_id}}">{{title}}</a>
+                        </h3>
+                    {{/book.bookSeries}}
                 
                 <div class="preview-nav">
                     <a href="#" class="active">Опис</a>
@@ -279,7 +285,7 @@
                     <ul class="details-list">
                         <li><strong>Жанр:</strong> <span>{{book.genre}}</span></li>
                         <li><strong>Дата релізу:</strong> <span>{{book.release}}</span></li>
-                        <li><strong>Автор:</strong> <a href="/login"><span>{{book.author}}</span></a></li>
+                        <li><strong>Автор:</strong> <a href="/login"><span>{{book.author.name}}</span></a></li>
                     </ul>
                 </div>
             </aside>

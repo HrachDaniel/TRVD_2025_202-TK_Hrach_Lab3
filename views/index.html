@@ -37,13 +37,13 @@
         <div class="section-grid top-updates-grid">
 
             {{#books}}
-            <a href="/preview/{{id}}" class="manga-card">
+                <a href="/preview/{{_id}}" class="manga-card">
                 <img src="{{image}}" alt="{{title}}">
                 <div class="manga-card-info">
                     <h4>{{title}}</h4>
-                    <p>{{genre}}</p>
+                    <p>{{author.name}}</p>
                 </div>
-            </a>
+                </a>
             {{/books}}
             
             <a href="#" class="manga-card">
@@ -141,7 +141,7 @@
                 <h3>Зараз читають</h3> 
                 
                 {{#books}}
-                <a href="/preview/{{id}}" class="list-item">
+                <a href="/preview/{{_id}}" class="list-item">
                     <img src="{{image}}" alt="{{title}}">
                     <div class="manga-card-info">
                         <h4>{{title}}</h4>

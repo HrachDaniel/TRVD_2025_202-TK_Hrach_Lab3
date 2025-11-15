@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library | Автор</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-left">
+            <span class="header-logo">Library</span>
+            <nav class="main-nav">
+                <a href="/home">Головна</a>
+                <a href="/home.catalog">Каталог</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <a href="#" id="profile-link" class="btn-login" style="text-decoration: none;">Профіль</a>
+        </div>
+    </header>
+    <aside id="profile-sidebar" class="profile-sidebar">
+        <div class="sidebar-header">
+            <h3>Профіль</h3>
+            <button class="sidebar-close" id="sidebar-close">&times;</button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="#">📖 Прочитане</a>
+            <a href="/savage">⭐ Збережене</a>
+            <a href="/">🚪 Вихід</a>
+        </nav>
+        
+        <div class="theme-switch-block">
+            <span>Темне оформлення</span>
+            <label class="switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </aside>
+    <div class="container catalog-layout">
+        
+        <main class="catalog-main">
+            <div class="catalog-header">
+            </div>
+
+            <div class="author-profile" style="padding: 20px;">
+                <img src="{{author.photo}}" alt="{{author.name}}" style="width: 150px; border-radius: 50%;">
+                <h1>{{author.name}}</h1>
+                <p>{{author.biography}}</p>
+            </div>
+
+            <div class="section-grid catalog-grid-page">
+            {{#books}}
+            <a href="/preview/{{_id}}" class="manga-card">
+                <img src="{{image}}" alt="{{title}}">
+                <div class="manga-card-info">
+                    <h4>{{title}}</h4>
+                    <p>{{genre}}</p>
+                </div>
+            </a>
+            {{/books}}
+
+            {{^books}}
+            <p>У цього автора поки що немає доданих книг.</p>
+            {{/books}}
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2025 Library. Інформаційний портал</p>
+            <nav class="footer-nav">
+                <a href="#">Контакти</a>
+                <a href="#">Політика конфіденційності</a>
+            </nav>
+        </div>
+    </footer>
+    <script src="/script.js" defer>
+    </script>
+</body>
+</html>
