@@ -28,7 +28,6 @@ router.post('/register', async (req, res) => {
         const user = new User({ login, email, password, age, gender });
         await user.save(); 
         console.log('✅ Користувача успішно збережено в MongoDB!');
-
         res.redirect('/login');
 
     } catch (error) {
