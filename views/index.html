@@ -36,15 +36,15 @@
         <h2>Оновлення за сьогодні</h2>
         <div class="section-grid top-updates-grid">
 
-            {{#books}}
-                <a href="/preview/{{_id}}" class="manga-card">
-                <img src="{{image}}" alt="{{title}}">
-                <div class="manga-card-info">
-                    <h4>{{title}}</h4>
-                    <p>{{author.name}}</p>
-                </div>
-                </a>
-            {{/books}}
+        {{#newUpdates}}
+        <a href="/preview/{{_id}}" class="manga-card">
+            <img src="{{image}}" alt="{{title}}">
+            <div class="manga-card-info">
+                <h4>{{title}}</h4>
+                <p>{{author.name}}</p>
+            </div>
+        </a>
+        {{/newUpdates}}
             
             <a href="#" class="manga-card">
                 <img src="https://via.placeholder.com/150x250/9b59b6/ffffff?text=Книга+2" alt="Книга 2">
@@ -138,73 +138,43 @@
         
         <div class="index-sections">
             <div class="section-block">
-                <h3>Зараз читають</h3> 
-                
-                {{#books}}
-                <a href="/preview/{{_id}}" class="list-item">
-                    <img src="{{image}}" alt="{{title}}">
-                    <div class="manga-card-info">
-                        <h4>{{title}}</h4>
-                        <p>{{genre}}</p>
-                    </div>
-                </a>
-                {{/books}}
+                <h3>Зараз читають</h3>                 
+                {{#beingRead}}
+                    <a href="/preview/{{_id}}" class="list-item">
+                        <img src="{{image}}" alt="{{title}}">
+                        <div class="list-item-info">
+                            <h4>{{title}}</h4>
+                            <p>{{genre}}</p>
+                        </div>
+                    </a>
+                {{/beingRead}}
             </div>
 
             <div class="section-block">
                 <h3>Набирає популярність</h3>
                 
-                <a href="#" class="list-item">
-                    <img src="https://via.placeholder.com/60x80/95a5a6/ffffff?text=Ут" alt="Книга 12">
-                    <div class="list-item-info">
-                        <h4>Книга 12</h4>
-                        <p>Трилер</p>
-                    </div>
-                </a>
-                
-                <a href="#" class="list-item">
-                    <img src="https://via.placeholder.com/60x80/1abc9c/ffffff?text=Лю" alt="Книга 13">
-                    <div class="list-item-info">
-                        <h4>Книга 13</h4>
-                        <p>Історичний</p>
-                    </div>
-                </a>
-
-                <a href="#" class="list-item">
-                    <img src="https://via.placeholder.com/60x80/f39c12/ffffff?text=Я+пр" alt="Книга 14">
-                    <div class="list-item-info">
-                        <h4>Книга 14</h4>
-                        <p>Фентезі</p>
-                    </div>
-                </a>
+                {{#trending}}
+                    <a href="/preview/{{_id}}" class="list-item">
+                        <img src="{{image}}" alt="{{title}}">
+                        <div class="list-item-info">
+                            <h4>{{title}}</h4>
+                            <p>{{genre}}</p>
+                        </div>
+                    </a>
+                {{/trending}}
             </div>
             
             <div class="section-block">
                 <h3>Популярне</h3>
-                
-                <a href="#" class="list-item">
-                    <img src="https://via.placeholder.com/60x80/8e44ad/ffffff?text=Как" alt="Книга 15">
-                    <div class="list-item-info">
-                        <h4>Книга 15</h4>
-                        <p>Роман</p>
-                    </div>
-                </a>
-                
-                <a href="#" class="list-item">
-                    <img src="https://via.placeholder.com/60x80/c0392b/ffffff?text=Да" alt="Книга 16">
-                    <div class="list-item-info">
-                        <h4>Книга 16</h4>
-                        <p>Комікс</p>
-                    </div>
-                </a>
-
-                <a href="#" class="list-item">
-                    <img src="https://via.placeholder.com/60x80/27ae60/ffffff?text=Ва" alt="Книга 17">
-                    <div class="list-item-info">
-                        <h4>Книга 17</h4>
-                        <p>Манга</p>
-                    </div>
-                </a>
+                {{#popular}}
+                    <a href="/preview/{{_id}}" class="list-item">
+                        <img src="{{image}}" alt="{{title}}">
+                        <div class="list-item-info">
+                            <h4>{{title}}</h4>
+                            <p>{{genre}}</p>
+                        </div>
+                    </a>
+                {{/popular}}
             </div>
         </div>
 

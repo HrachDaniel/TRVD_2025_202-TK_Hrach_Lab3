@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Темний</title>
+    <title>{{book.title}}</title>
     <link rel="stylesheet" href="/style.css">
     <style>
         .preview-content {
@@ -181,6 +181,10 @@
             color: #333;
         }
 
+        a {
+            color: #181718
+        }
+
 
         @media (max-width: 900px) {
             .preview-layout {
@@ -247,12 +251,15 @@
                         <span class="score">{{book.score}}</span>
                     </div>
                 </div>
-                    {{#book.bookSeries}}
-                        <h3 style="margin-top: 0; font-weight: 500;">
+                {{#book.bookSeries}}
+                    <div class="collection-link" style="display: flex; align-items: center; margin-top: -10px; margin-bottom: 15px; font-weight: 500;">
+                        <h3 style="margin: 0; font-weight: 500;">
                             Частина колекції: 
                             <a href="/collection/{{_id}}">{{title}}</a>
                         </h3>
-                    {{/book.bookSeries}}
+                        <img src="{{coverImage}}" alt="{{title}}" style="width: 40px; height: 60px; object-fit: cover; margin-left: 10px; border-radius: 4px;">
+                    </div>
+                {{/book.bookSeries}}
                 
                 <div class="preview-nav">
                     <a href="#" class="active">Опис</a>
@@ -291,28 +298,17 @@
             </aside>
             
             <main class="main-col">
-<h3>Схоже</h3>
+                <h3>Схоже</h3>
                 <div class="section-grid top-updates-grid" style="overflow-x: auto; display: flex; gap: 15px;">
-                    <a href="#" class="manga-card" style="width: 140px; flex-shrink: 0;">
-                        <img src="https://via.placeholder.com/140x250/2ecc71/ffffff?text=Схожее+1" alt="Схоже 1">
+                {{#similarBooks}}
+                    <a href="/preview/{{_id}}" class="manga-card" style="width: 140px; flex-shrink: 0;">
+                        <img src="{{image}}" alt="{{title}}">
                         <div class="manga-card-info">
-                            <h4>Схоже 1</h4>
+                            <h4>{{title}}</h4>
                         </div>
                     </a>
-                    <a href="#" class="manga-card" style="width: 140px; flex-shrink: 0;">
-                        <img src="https://via.placeholder.com/140x250/3498db/ffffff?text=Схожее+2" alt="Схоже 2">
-                        <div class="manga-card-info">
-                            <h4>Схоже 2</h4>
-                        </div>
-                    </a>
-                    <a href="#" class="manga-card" style="width: 140px; flex-shrink: 0;">
-                        <img src="https://via.placeholder.com/140x250/f1c40f/ffffff?text=Схожее+3" alt="Схоже 3">
-                        <div class="manga-card-info">
-                            <h4>Схоже 3</h4>
-                        </div>
-                    </a>
-                    </div>
-                
+                {{/similarBooks}}
+                </div>   
             </main>
         </div>
 

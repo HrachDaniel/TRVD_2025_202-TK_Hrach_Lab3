@@ -600,7 +600,8 @@ body.dark-theme p,
 body.dark-theme li,
 body.dark-theme .sidebar-header h3,
 body.dark-theme .details-list li span,
-body.dark-theme .preview-nav a {
+body.dark-theme .preview-nav a,
+body.dark-theme a {
     color: #f4f4f4;
 }
 

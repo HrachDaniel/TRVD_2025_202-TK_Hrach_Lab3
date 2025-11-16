@@ -57,7 +57,7 @@ router.post('/login', async (req, res) => {
             };
             res.redirect('/home');
         } else {
-            res.status(401).send('Неправильний email або пароль.');
+            return res.status(401).send('Неправильний email або пароль.');
         }
     } catch (error) {
         console.error('Помилка входу:', error);
@@ -77,11 +77,24 @@ router.get('/logout', (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const books = await Book.find({})
-            .populate('author')
-            .populate('bookSeries')
-            .limit(12);
-        res.render('index.html', { books: books });
+        const newUpdates = await Book.find({ isNewUpdate: true })
+            .populate('author').limit(12);
+        
+        const beingRead = await Book.find({ isBeingRead: true })
+            .populate('author').limit(3);
+            
+        const trending = await Book.find({ isTrending: true })
+            .populate('author').limit(3);
+            
+        const popular = await Book.find({ isPopular: true })
+            .populate('author').limit(3);
+
+        res.render('index.html', { 
+            newUpdates: newUpdates,
+            beingRead: beingRead,
+            trending: trending,
+            popular: popular
+        });
 
     } catch (error) {
         console.error('Помилка завантаження книг для головної сторінки:', error);
@@ -91,11 +104,27 @@ router.get('/', async (req, res) => {
 
 router.get('/home', isAuthenticated, async (req, res) => {
     try {
-        const books = await Book.find({})
-            .populate('author')
-            .populate('bookSeries');
-        res.render('home.html', { books });
+        const newUpdates = await Book.find({ isNewUpdate: true })
+            .populate('author').limit(12);
+        
+        const beingRead = await Book.find({ isBeingRead: true })
+            .populate('author').limit(3);
+            
+        const trending = await Book.find({ isTrending: true })
+            .populate('author').limit(3);
+            
+        const popular = await Book.find({ isPopular: true })
+            .populate('author').limit(3);
+
+        res.render('home.html', { 
+            newUpdates: newUpdates,
+            beingRead: beingRead,
+            trending: trending,
+            popular: popular
+        });
+
     } catch (error) {
+        console.error('Помилка завантаження книг для головної сторінки:', error);
         res.status(500).send('Не вдалося завантажити книги.');
     }
 });
@@ -121,13 +150,21 @@ router.get(['/preview/:id', '/home/preview/:id'], async (req, res) => {
         
         if (book) {
             const template = req.path.includes('/home') ? 'home.preview.html' : 'preview.html';
-            res.render(template, { book });
+            return res.render(template, { book });
         } else {
-            res.status(404).send('Книгу не знайдено.');
+            return res.status(404).send('Книгу не знайдено.');
         }
+
+        const similarBooks = await Book.find({
+            genre: book.genre,
+            _id: { $ne: book._id } 
+        }).limit(5);
+        const template = req.path.includes('/home') ? 'home.preview.html' : 'preview.html';
+        res.render(template, { book: book, similarBooks: similarBooks });
+
     } catch (error) {
         console.error("Помилка на маршруті preview:", error);
-        res.status(500).send('Невірний ID книги або помилка сервера.');
+        return res.status(500).send('Невірний ID книги або помилка сервера.');
     }
 });
 
@@ -163,10 +200,20 @@ router.get('/savage', isAuthenticated, async (req, res) => {
     try {
         const user = await User.findById(req.session.user.id).populate({
             path: 'savedBooks',
-            populate: { path: 'author' }
+            populate: [
+                { path: 'author' },
+                { path: 'bookSeries' }
+            ]
         });
+
+        if (!user) {
+            return res.status(404).send('Користувача не знайдено.');
+        }
+
         res.render('savage.html', { books: user.savedBooks });
+
     } catch (error) {
+        console.error("Помилка завантаження збережених книг:", error);
         res.status(500).send('Не вдалося завантажити збережені книги.');
     }
 });

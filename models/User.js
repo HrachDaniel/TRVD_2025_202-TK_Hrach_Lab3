@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     age: { type: Number, required: true },
     gender: { type: String },
     role: { type: String, enum: ['user', 'admin'], default: 'user' },
-    savedBooks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }]
+    savedBooks: [{ type: Number, ref: 'Book' }]
 });
 
 userSchema.pre('save', async function(next) {

@@ -49,17 +49,22 @@
             <div class="section-grid catalog-grid-page">
 
             {{#books}}
-            <div class="manga-card">
-                <a href="/preview/{{id}}">
-                    <img src="{{image}}" alt="{{title}}">
-                </a>
+                <div class="manga-card">
+                    <a href="/preview/{{_id}}">
+                        <img src="{{image}}" alt="{{title}}">
+                    </a>
                     <div class="manga-card-info">
                         <h4>{{title}}</h4>
-                        <p>{{genre}}</p>
-                        <button class="btn-remove" data-book-id="{{id}}">Вилучити</button>
+                        <p>{{author.name}}</p>
+                        <button class="btn-remove btn-remove-savage" data-book-id="{{_id}}">Вилучити</button>
                     </div>
-            </div>
+                </div>
             {{/books}}
+            
+            {{^books}}
+                <p>Ваш список збережених книг порожній.</p>
+            {{/books}}
+            </div>
         </main>
             <div id="custom-context-menu" class="context-menu">
             <button id="context-menu-delete-btn" class="context-menu-btn">Вилучити</button>

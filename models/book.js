@@ -17,7 +17,12 @@ const bookSchema = new mongoose.Schema({
     tags: [String],
     release: String,
     score: { type: String, required: true },
-    description: { type: String }
+    description: { type: String },
+
+    isNaeUpdate: { type: Boolean, default: false },
+    isBeingRead: { type: Boolean, default: false },
+    isTrending: { type: Boolean, default: false },  
+    isPopular: { type: Boolean, default: false }
 });
 
 const Book = mongoose.model('Book', bookSchema);
